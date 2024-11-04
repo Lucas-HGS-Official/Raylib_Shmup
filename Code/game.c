@@ -14,9 +14,9 @@ void main() {
     int playerPosY = 150;
 
     Texture2D starTexture = LoadTexture("../Assets/images/star.png");
-    SetRandomSeed(time(NULL));
+    SetRandomSeed((unsigned int)time(NULL));
     int *starListPosX = LoadRandomSequence(20, starTexture.width, screenWidth - starTexture.width);
-    SetRandomSeed(time(NULL));
+    SetRandomSeed((unsigned int)time(NULL));
     int *starListPosY = LoadRandomSequence(20, starTexture.height, screenHeight - starTexture.height);
 
     SetTargetFPS(60);
