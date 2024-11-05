@@ -48,8 +48,5 @@ void main() {
     UnloadTexture(playerTexture);
     UnloadTexture(starTexture);
 
-    UnloadRandomSequence(starListPosX);
-    UnloadRandomSequence(starListPosY);
-
     CloseWindow();
 }
