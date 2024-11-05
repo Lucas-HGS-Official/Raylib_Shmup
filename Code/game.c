@@ -25,7 +25,7 @@ void main() {
         starListPosY[i] = GetRandomValue(0, screenHeight - starTexture.height);
     }
 
-    SetTargetFPS(60);
+    // SetTargetFPS(60);
 
     while (!WindowShouldClose()) {
 
