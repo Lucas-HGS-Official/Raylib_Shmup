@@ -10,8 +10,9 @@ void main() {
     InitWindow(screenWidth, screenHeight, "Ray Space Shooter");
 
     Texture2D playerTexture = LoadTexture("../Assets/images/player.png");
-    int playerPosX = 100;
-    int playerPosY = 150;
+    Rectangle playerSrcRect = {0,0, playerTexture.width, playerTexture.height};
+    int playerPosX = (screenWidth/2)-playerTexture.width/2;
+    int playerPosY = ((screenHeight/4)*3)-playerTexture.height/2;
 
     Texture2D starTexture = LoadTexture("../Assets/images/star.png");
     SetRandomSeed((unsigned int)time(NULL));
@@ -28,8 +29,6 @@ void main() {
 
     while (!WindowShouldClose()) {
 
-        playerPosX++;
-
         BeginDrawing();
 
             ClearBackground(BLUE);
@@ -38,7 +37,7 @@ void main() {
                 DrawTexture(starTexture, starListPosX[i], starListPosY[i], WHITE);
             }
 
-            DrawTexture(playerTexture, playerPosX, playerPosY, WHITE);
+            DrawTextureRec(playerTexture, playerSrcRect, (Vector2){playerPosX, playerPosY}, WHITE);
 
 
             DrawText("Hello World!!", 550, 300, 40, LIGHTGRAY);
