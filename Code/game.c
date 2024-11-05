@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "raymath.h"
 #include <time.h>
 #include <stdio.h>
 
@@ -11,8 +12,8 @@ void main() {
 
     Texture2D playerTexture = LoadTexture("../Assets/images/player.png");
     Rectangle playerSrcRect = {0,0, playerTexture.width, playerTexture.height};
-    int playerPosX = (screenWidth/2)-playerTexture.width/2;
-    int playerPosY = ((screenHeight/4)*3)-playerTexture.height/2;
+    Vector2 playerPos = {(screenWidth/2)-playerTexture.width/2, ((screenHeight/4)*3)-playerTexture.height/2};
+    Vector2 playerMovVec = { 20, -20 };
 
     Texture2D starTexture = LoadTexture("../Assets/images/star.png");
     SetRandomSeed((unsigned int)time(NULL));
@@ -29,6 +30,8 @@ void main() {
 
     while (!WindowShouldClose()) {
 
+        playerPos = Vector2Add(playerPos, Vector2Scale(playerMovVec, GetFrameTime()));
+
         BeginDrawing();
 
             ClearBackground(BLUE);
@@ -37,7 +40,7 @@ void main() {
                 DrawTexture(starTexture, starListPosX[i], starListPosY[i], WHITE);
             }
 
-            DrawTextureRec(playerTexture, playerSrcRect, (Vector2){playerPosX, playerPosY}, WHITE);
+            DrawTextureRec(playerTexture, playerSrcRect, playerPos, WHITE);
 
 
         EndDrawing();
