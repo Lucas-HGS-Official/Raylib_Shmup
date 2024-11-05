@@ -40,8 +40,6 @@ void main() {
             DrawTextureRec(playerTexture, playerSrcRect, (Vector2){playerPosX, playerPosY}, WHITE);
 
 
-            DrawText("Hello World!!", 550, 300, 40, LIGHTGRAY);
-
         EndDrawing();
     }
 
