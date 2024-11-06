@@ -11,9 +11,10 @@ void main() {
     InitWindow(screenWidth, screenHeight, "Ray Space Shooter");
 
     Texture2D playerTexture = LoadTexture("../Assets/images/player.png");
-    Rectangle playerSrcRect = {0,0, playerTexture.width, playerTexture.height};
     Vector2 playerPos = {(screenWidth/2)-playerTexture.width/2, ((screenHeight/4)*3)-playerTexture.height/2};
-    Vector2 playerDirectionVec = { 2, -2 };
+    Rectangle playerSrcRect = {0,0, playerTexture.width, playerTexture.height};
+    Rectangle playerDestRect = {playerPos.x, playerPos.y,  playerTexture.width, playerTexture.height};
+    // Vector2 playerDirectionVec = { 2, -2 };
     float playerSpeed = 100.f;
 
     Texture2D starTexture = LoadTexture("../Assets/images/star.png");
@@ -31,8 +32,9 @@ void main() {
 
     while (!WindowShouldClose()) {
 
-        playerPos = Vector2Add(playerPos, Vector2Scale(playerDirectionVec, playerSpeed * GetFrameTime()));
-
+        // playerPos = Vector2Add(playerPos, Vector2Scale(playerDirectionVec, playerSpeed * GetFrameTime()));
+        playerDestRect.x = GetMousePosition().x;
+        playerDestRect.y = GetMousePosition().y;
         BeginDrawing();
 
             ClearBackground(DARKBLUE);
@@ -41,7 +43,7 @@ void main() {
                 DrawTexture(starTexture, starListPosX[i], starListPosY[i], WHITE);
             }
 
-            DrawTextureRec(playerTexture, playerSrcRect, playerPos, WHITE);
+            DrawTexturePro(playerTexture, playerSrcRect, playerDestRect, (Vector2){ playerTexture.width/2, playerTexture.height/2 }, 0.f, WHITE);
 
 
         EndDrawing();
