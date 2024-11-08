@@ -11,9 +11,14 @@ struct Sprite {
 }typedef Sprite;
 
 
+void SpriteSetup(Sprite* sprite);
+
 Sprite PlayerInit();
 
 Vector2 PlayerControls(Vector2 playerDirectionVec, Vector2 playerPos, float playerSpeed, Sprite* player);
+
+
+Sprite StarsInit();
 
 
 void main() {
@@ -68,22 +73,26 @@ void main() {
 
 
 
+void SpriteSetup(Sprite* sprite) {
+    Rectangle srcRect = {0, 0, sprite->spriteTexture.width, sprite->spriteTexture.height};
+    Rectangle destRect = {0, 0,  sprite->spriteTexture.width, sprite->spriteTexture.height};
+    Vector2 origin = {sprite->spriteTexture.width/2, sprite->spriteTexture.height/2};
+    
+    sprite->DestRect = destRect;
+    sprite->SrcRect = srcRect;
+    sprite->origin = origin;
+}
+
+
 Sprite PlayerInit() {
     Sprite playerSprite;
 
     playerSprite.spriteTexture = LoadTexture("../Assets/images/player.png");
 
-    Rectangle srcRect = {0, 0, playerSprite.spriteTexture.width, playerSprite.spriteTexture.height};
-    Rectangle destRect = {0, 0,  playerSprite.spriteTexture.width, playerSprite.spriteTexture.height};
-    Vector2 origin = {playerSprite.spriteTexture.width/2, playerSprite.spriteTexture.height/2};
-
-    playerSprite.DestRect = destRect;
-    playerSprite.SrcRect = srcRect;
-    playerSprite.origin = origin;
+    SpriteSetup(&playerSprite);
 
     return playerSprite;
 }
-
 
 Vector2 PlayerControls(Vector2 playerDirectionVec, Vector2 playerPos, float playerSpeed, Sprite* player) {
     playerDirectionVec.x = IsKeyDown(KEY_RIGHT) - IsKeyDown(KEY_LEFT);
@@ -95,4 +104,9 @@ Vector2 PlayerControls(Vector2 playerDirectionVec, Vector2 playerPos, float play
     player->DestRect.y = playerPos.y;
 
     return playerPos;
+}
+
+
+Sprite StarsInit() {
+    
 }
