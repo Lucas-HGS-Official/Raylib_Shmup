@@ -18,7 +18,7 @@ Sprite PlayerInit();
 Vector2 PlayerControls(Vector2 playerDirectionVec, Vector2 playerPos, float playerSpeed, Sprite* player);
 
 
-Sprite StarsInit();
+void StarsInit(int screenWidth, int screenHeight, Sprite* starSprite, int starPosList[2][20]);
 
 
 void main() {
@@ -32,17 +32,11 @@ void main() {
     player.DestRect.x = playerPos.x; player.DestRect.y = playerPos.y; 
     Vector2 playerDirectionVec = { 0, 0 };
     float playerSpeed = 500.f;
+    
+    Sprite starSprite;
+    int starPosList[2][20] = { 0 };
+    StarsInit(screenWidth, screenHeight, &starSprite, starPosList);
 
-    Texture2D starTexture = LoadTexture("../Assets/images/star.png");
-    SetRandomSeed((unsigned int)time(NULL));
-    int starListPosX[20];
-    for(int i=0; i<20;i++) {
-        starListPosX[i] = GetRandomValue(0, screenWidth - starTexture.width);
-    }
-    int starListPosY[20];
-    for(int i=0; i<20;i++) {
-        starListPosY[i] = GetRandomValue(0, screenHeight - starTexture.height);
-    }
 
     // SetTargetFPS(60);
 
@@ -56,7 +50,7 @@ void main() {
             ClearBackground(DARKBLUE);
 
             for(int i = 0; i < 20; i++) {
-                DrawTexture(starTexture, starListPosX[i], starListPosY[i], WHITE);
+                DrawTexture(starSprite.spriteTexture, starPosList[0][i], starPosList[1][i], WHITE);
             }
 
             DrawTexturePro(player.spriteTexture, player.SrcRect, player.DestRect, player.origin, 0.f, WHITE);
@@ -66,7 +60,7 @@ void main() {
     }
 
     UnloadTexture(player.spriteTexture);
-    UnloadTexture(starTexture);
+    UnloadTexture(starSprite.spriteTexture);
 
     CloseWindow();
 }
@@ -88,7 +82,6 @@ Sprite PlayerInit() {
     Sprite playerSprite;
 
     playerSprite.spriteTexture = LoadTexture("../Assets/images/player.png");
-
     SpriteSetup(&playerSprite);
 
     return playerSprite;
@@ -107,6 +100,18 @@ Vector2 PlayerControls(Vector2 playerDirectionVec, Vector2 playerPos, float play
 }
 
 
-Sprite StarsInit() {
-    
+void StarsInit(int screenWidth, int screenHeight, Sprite* starSprite, int starPosList[2][20]) {
+
+    starSprite->spriteTexture = LoadTexture("../Assets/images/star.png");
+    SpriteSetup(starSprite);
+
+    SetRandomSeed((unsigned int)time(NULL));
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 20; j++) {
+            if (i == 0)
+                starPosList[i][j] = GetRandomValue(0, screenWidth - starSprite->spriteTexture.width);
+            else if (i == 1)
+                starPosList[i][j] = GetRandomValue(0, screenHeight - starSprite->spriteTexture.height);
+        }
+    }
 }
