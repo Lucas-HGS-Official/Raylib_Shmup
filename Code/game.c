@@ -94,18 +94,18 @@ Vector2 PlayerControls(Vector2 playerDirectionVec, Vector2 playerPos, float play
     player->DestRect.x = playerPos.x;
     player->DestRect.y = playerPos.y;
 
-    static bool canShoot = true;
+    static bool isShoot = true;
     static double shotTime = 0;
     static double shotTimerDuration = 2;
 
-    if (IsKeyDown(KEY_SPACE) && canShoot) {
+    if (IsKeyDown(KEY_SPACE) && isShoot) {
         printf("\nfire laser\n");
-        canShoot = false;
+        isShoot = false;
         shotTime = GetTime();
     }
-    if (!canShoot && (GetTime() - shotTime) >= shotTimerDuration){
+    if (!isShoot && (GetTime() - shotTime) >= shotTimerDuration){
         printf("\ncan fire laser\n");
-        canShoot = true;
+        isShoot = true;
     }
 
     return playerPos;
