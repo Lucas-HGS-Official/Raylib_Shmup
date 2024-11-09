@@ -2,6 +2,7 @@
 #include "raymath.h"
 #include <time.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 struct Sprite {
     Texture2D spriteTexture;
@@ -13,10 +14,8 @@ struct Sprite {
 
 void SpriteSetup(Sprite* sprite);
 
-Sprite PlayerInit();
-
+void PlayerInit(Sprite* playerSprite);
 Vector2 PlayerControls(Vector2 playerDirectionVec, Vector2 playerPos, float playerSpeed, Sprite* player);
-
 
 void StarsInit(int screenWidth, int screenHeight, Sprite* starSprite, int starPosList[2][20]);
 
@@ -27,9 +26,10 @@ void main() {
 
     InitWindow(screenWidth, screenHeight, "Ray Space Shooter");
 
-    Sprite player = PlayerInit();
-    Vector2 playerPos = {(screenWidth/2)-player.spriteTexture.width/2, ((screenHeight/4)*3)-player.spriteTexture.height/2};
-    player.DestRect.x = playerPos.x; player.DestRect.y = playerPos.y; 
+    Sprite* player = (Sprite*)malloc(sizeof(Sprite));
+    PlayerInit(player);
+    Vector2 playerPos = {(screenWidth/2)-player->spriteTexture.width/2, ((screenHeight/4)*3)-player->spriteTexture.height/2};
+    player->DestRect.x = playerPos.x; player->DestRect.y = playerPos.y; 
     Vector2 playerDirectionVec = { 0, 0 };
     float playerSpeed = 500.f;
     
@@ -42,7 +42,7 @@ void main() {
 
     while (!WindowShouldClose()) {
 
-        playerPos = PlayerControls(playerDirectionVec, playerPos, playerSpeed, &player);
+        playerPos = PlayerControls(playerDirectionVec, playerPos, playerSpeed, player);
 
         
         BeginDrawing();
@@ -53,14 +53,16 @@ void main() {
                 DrawTexture(starSprite.spriteTexture, starPosList[0][i], starPosList[1][i], WHITE);
             }
 
-            DrawTexturePro(player.spriteTexture, player.SrcRect, player.DestRect, player.origin, 0.f, WHITE);
+            DrawTexturePro(player->spriteTexture, player->SrcRect, player->DestRect, player->origin, 0.f, WHITE);
 
 
         EndDrawing();
     }
 
-    UnloadTexture(player.spriteTexture);
+    UnloadTexture(player->spriteTexture);
     UnloadTexture(starSprite.spriteTexture);
+
+    free(player);
 
     CloseWindow();
 }
@@ -78,13 +80,9 @@ void SpriteSetup(Sprite* sprite) {
 }
 
 
-Sprite PlayerInit() {
-    Sprite playerSprite;
-
-    playerSprite.spriteTexture = LoadTexture("../Assets/images/player.png");
-    SpriteSetup(&playerSprite);
-
-    return playerSprite;
+void PlayerInit(Sprite* playerSprite) {
+    playerSprite->spriteTexture = LoadTexture("../Assets/images/player.png");
+    SpriteSetup(playerSprite);
 }
 
 Vector2 PlayerControls(Vector2 playerDirectionVec, Vector2 playerPos, float playerSpeed, Sprite* player) {
