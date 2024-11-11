@@ -19,6 +19,8 @@ Vector2 PlayerControls(Vector2 playerDirectionVec, Vector2 playerPos, float play
 
 void StarsInit(int screenWidth, int screenHeight, Sprite* starSprite, int starPosList[2][20]);
 
+void asteroidsSetup();
+
 
 void main() {
     const int screenWidth = 1366;
@@ -37,6 +39,8 @@ void main() {
     int starPosList[2][20] = { 0 };
     StarsInit(screenWidth, screenHeight, &starSprite, starPosList);
 
+    Sprite* asteroidSprite = (Sprite*) malloc(sizeof(Sprite));;
+    asteroidsSetup(asteroidSprite);
 
     // SetTargetFPS(60);
 
@@ -55,14 +59,17 @@ void main() {
 
             DrawTexturePro(player->spriteTexture, player->SrcRect, player->DestRect, player->origin, 0.f, WHITE);
 
+            DrawTexture(asteroidSprite->spriteTexture, 0, 0, WHITE);
 
         EndDrawing();
     }
 
     UnloadTexture(player->spriteTexture);
     UnloadTexture(starSprite.spriteTexture);
+    UnloadTexture(asteroidSprite->spriteTexture);
 
     free(player);
+    free(asteroidSprite);
 
     CloseWindow();
 }
@@ -126,4 +133,11 @@ void StarsInit(int screenWidth, int screenHeight, Sprite* starSprite, int starPo
                 starPosList[i][j] = GetRandomValue(0, screenHeight - starSprite->spriteTexture.height);
         }
     }
+}
+
+
+void asteroidsSetup(Sprite* asteroid) {
+    asteroid->spriteTexture = LoadTexture("../Assets/images/meteor.png");
+
+    SpriteSetup(asteroid);
 }
