@@ -1,3 +1,4 @@
+#include "libs/flecs/flecs.h"
 #include "raylib.h"
 #include "raymath.h"
 #include <time.h>
@@ -23,6 +24,8 @@ void asteroidsSetup();
 
 
 void main() {
+    ecs_world_t *world = ecs_init();
+
     const int screenWidth = 1366;
     const int screenHeight = 768;
 
@@ -72,6 +75,7 @@ void main() {
     free(asteroidSprite);
 
     CloseWindow();
+    ecs_fini(world);
 }
 
 
