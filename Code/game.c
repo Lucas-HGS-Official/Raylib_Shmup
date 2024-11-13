@@ -72,7 +72,9 @@ void main() {
     UnloadTexture(asteroidSprite->spriteTexture);
 
     free(player);
+    player = NULL;
     free(asteroidSprite);
+    asteroidSprite = NULL;
 
     CloseWindow();
     ecs_fini(world);
