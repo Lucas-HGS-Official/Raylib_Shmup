@@ -1,4 +1,4 @@
-#include "libs/flecs/flecs.h"
+#include "../libs/flecs/flecs.h"
 #include "raylib.h"
 #include "raymath.h"
 #include <time.h>
@@ -94,7 +94,7 @@ void SpriteSetup(Sprite* sprite) {
 
 
 void PlayerInit(Sprite* playerSprite) {
-    playerSprite->spriteTexture = LoadTexture("../Assets/images/player.png");
+    playerSprite->spriteTexture = LoadTexture("Assets/images/player.png");
     SpriteSetup(playerSprite);
 }
 
@@ -127,7 +127,7 @@ Vector2 PlayerControls(Vector2 playerDirectionVec, Vector2 playerPos, float play
 
 void StarsInit(int screenWidth, int screenHeight, Sprite* starSprite, int starPosList[2][20]) {
 
-    starSprite->spriteTexture = LoadTexture("../Assets/images/star.png");
+    starSprite->spriteTexture = LoadTexture("Assets/images/star.png");
     SpriteSetup(starSprite);
 
     SetRandomSeed((unsigned int)time(NULL));
@@ -143,7 +143,7 @@ void StarsInit(int screenWidth, int screenHeight, Sprite* starSprite, int starPo
 
 
 void asteroidsSetup(Sprite* asteroid) {
-    asteroid->spriteTexture = LoadTexture("../Assets/images/meteor.png");
+    asteroid->spriteTexture = LoadTexture("Assets/images/meteor.png");
 
     SpriteSetup(asteroid);
 }
